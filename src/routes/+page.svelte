@@ -3,7 +3,7 @@
     import { content } from "../lib/content";
     import { goto } from "$app/navigation";
     import { takeReturn } from "../lib/return";
-    import { loadUser, auth } from "../lib/auth.svelte";
+
     import CatPeek from "../lib/components/CatPeek.svelte";
     import Doodles from "../lib/components/Doodles.svelte";
     import Cat from "../lib/components/Cat.svelte";
@@ -13,13 +13,6 @@
     import DiscordButton from "../lib/components/DiscordButton.svelte";
     import CodePreview from "../lib/components/CodePreview.svelte";
     import SketchArrow from "../lib/components/SketchArrow.svelte";
-
-    onMount(async () => {
-        await loadUser();
-        if (!auth.user) return;
-        const back = takeReturn();
-        if (back) await goto(back);
-    });
 </script>
 
 <svelte:head>
@@ -35,9 +28,6 @@
         {#each content.nav as link}
             <a href={link.href}>{link.label}</a>
         {/each}
-        {#if auth.user}
-            <a href="/dashboard">Dashboard</a>
-        {/if}
     </nav>
 </header>
 
