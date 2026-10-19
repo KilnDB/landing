@@ -1,0 +1,79 @@
+@font-face {
+    font-family: "Estie Bestie";
+    src: url("/fonts/EstieBestieRegular-R9elW.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg: #1a1a1a;
+    --fg: #ffffff;
+    --muted: rgba(255, 255, 255, 0.62);
+    --line: rgba(255, 255, 255, 0.14);
+    --card: #222222;
+    --accent: #f0c685;
+    --accent-2: #bd976e;
+    --ink: #201617;
+    --font-display: "Estie Bestie", "Comic Sans MS", cursive;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.55;
+}
+
+a {
+    color: inherit;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-2);
+    border: 3px solid var(--bg);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #fff;
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-2) var(--bg);
+    }
+}
