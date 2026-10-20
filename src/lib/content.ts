@@ -26,10 +26,11 @@ export const content = {
     soon: {
         lines: ["Kiln's", "Big Thing"],
         body: [
-            "Describe the main thing Kiln does in a sentence or two.",
-            "Add a second paragraph if you need one.",
+            "Kiln is built to make infrastructure easy for consumers.",
+            "Host a full backend on our end and no worries for you.",
         ],
     },
+
     featuresTitle: "Features",
     features: [
         { title: "Databases", body: "You can host your own database that talks directly to your app." },
