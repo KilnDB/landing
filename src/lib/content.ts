@@ -54,6 +54,14 @@ export const content = {
             ["Connect to your database with no delay", "Latency between your app and your data"],
         ],
     },
+    signup: {
+        title: "Get early access",
+        body: "Drop your email and we'll let you know when Kiln is ready.",
+        placeholder: "you@example.com",
+        button: "Notify me",
+        success: "You're on the list!",
+        error: "Something went wrong. Please try again.",
+    },
     cta: {
         title: "Ready to fire it up?",
         body: "Log in with GitHub to get started.",

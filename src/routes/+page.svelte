@@ -13,6 +13,7 @@
     import DiscordButton from "../lib/components/DiscordButton.svelte";
     import CodePreview from "../lib/components/CodePreview.svelte";
     import SketchArrow from "../lib/components/SketchArrow.svelte";
+    import EmailSignup from "../lib/components/EmailSignup.svelte";
 </script>
 
 <svelte:head>
@@ -89,6 +90,8 @@
             {/each}
         </div>
     </section>
+
+    <EmailSignup />
 
     <section class="compare">
         <h2>{content.compare.title}</h2>
