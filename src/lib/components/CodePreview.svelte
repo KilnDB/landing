@@ -4,11 +4,12 @@
     import GoLogo from "./GoLogo.svelte";
     import RustLogo from "./RustLogo.svelte";
     import PythonLogo from "./PythonLogo.svelte";
+    import CSharpLogo from "./CSharpLogo.svelte";
 
     const files = [
         {
             id: "ts",
-            name: "query.ts",
+            name: "index.ts",
             lang: "TypeScript",
             logo: TypeScriptLogo,
             code: `const res = await fetch(\`https://api.kilndb.dev/db/\${dbId}/query\`, {
@@ -59,7 +60,7 @@ fmt.Println(out.Rows)`,
         },
         {
             id: "rs",
-            name: "main.rs",
+            name: "lib.rs",
             lang: "Rust",
             logo: RustLogo,
             code: `let res = reqwest::Client::new()
@@ -95,18 +96,40 @@ res.raise_for_status()
 
 print(res.json()["rows"])`,
         },
+        {
+            id: "cs",
+            name: "lib.cs",
+            lang: "C#",
+            logo: CSharpLogo,
+            code: `using var http = new HttpClient();
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer", Environment.GetEnvironmentVariable("KILN_TOKEN"));
+
+        var res = await http.PostAsJsonAsync(
+            $"https://api.kilndb.dev/db/{dbId}/query",
+            new
+            {
+                sql = "select * from users where id = $1",
+                @params = new[] { 42 },
+            });
+
+        res.EnsureSuccessStatusCode();
+
+        var json = await res.Content.ReadFromJsonAsync<JsonElement>();
+        Console.WriteLine(json.GetProperty("rows"));`,
+        },
     ];
 
     const KEYWORDS = new Set(
         (
             "async await const let return if else try catch new typeof instanceof as " +
-            "func var nil fn match use mut def not is in for from import except " +
+            "func var nil fn match use mut def not is in for from import except using throw " +
             "null true false undefined None True False"
         ).split(" "),
     );
 
     const TOKEN =
-        /(\/\/.*|#.*)|(\bf?"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`)|(\b\d+\b)|([A-Za-z_]\w*)(?=(!?\())?|([\s\S])/g;
+        /(\/\/.*|#.*)|((?:\bf|\$)?"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`)|(\b\d+\b)|([A-Za-z_]\w*)(?=(!?\())?|([\s\S])/g;
 
     type Tok = { t: string; c: string };
 
@@ -130,6 +153,14 @@ print(res.json()["rows"])`,
         return out;
     }
 
+    function dedent(code: string): string {
+        const [first, ...rest] = code.split("\n");
+        const min = Math.min(
+            ...rest.filter((l) => l.trim()).map((l) => l.match(/^ */)![0].length),
+        );
+        return [first, ...rest.map((l) => l.slice(min))].join("\n");
+    }
+
     const maxLines = Math.max(...files.map((f) => f.code.split("\n").length));
 
     let editorEl: HTMLElement | undefined = $state();
@@ -149,7 +180,7 @@ print(res.json()["rows"])`,
     let active = $state(0);
     let userPicked = false;
     const file = $derived(files[active]);
-    const lines = $derived(file.code.split("\n").map(tokenize));
+    const lines = $derived(dedent(file.code).split("\n").map(tokenize));
 
     function pick(i: number) {
         userPicked = true;
@@ -277,9 +308,9 @@ print(res.json()["rows"])`,
     .tab {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
         flex: none;
-        padding: 0.6rem 1.1rem;
+        padding: 0.6rem 0.8rem;
         border: 0;
         border-top: 2px solid transparent;
         background: var(--tab-off);
