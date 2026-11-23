@@ -13,7 +13,7 @@ export const content = {
         {
             title: "What is Kiln?",
             body: [
-                "Kiln is a all-in-one platform for hosting your own databases and CDN, giving you control ovr your data and content.",
+                "Kiln is a all-in-one platform for hosting your own databases and CDN, giving you control over your data and content.",
                 "Built for flexible infrastructure that adapts to your needs.",
             ],
         },
